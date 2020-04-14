@@ -1,0 +1,12 @@
+import pandas as pd
+import numpy as np
+
+import matplotlib.pyplot as plt
+from ipywidgets import interact
+df = pd.read_csv('../Python/csv/time_series_covid19.csv')
+
+@interact
+def cases(country=list(df["Country/Region"]), day=list(df.columns[4:])):
+    print(country)    
+    print(day)
+    print("cases", df[df["Country/Region"]==country][day])
