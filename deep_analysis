@@ -1,0 +1,16 @@
+import pandas as pd
+import numpy as np
+import random as rnd
+
+# visualization
+import seaborn as sns
+import matplotlib.pyplot as plt
+from ipywidgets import interact
+
+df = pd.read_csv('../Python/csv/time_series_covid19.csv')
+
+@interact
+def plot_country(ctr=df['Country/Region'].unique().tolist(), logy=True, cases_over='100'):
+    df_ = df.drop(['Province/State', 'Lat', 'Long'], 1).groupby('Country/Region').sum()
+    df_.columns = sorted(pd.to_datetime(df_.columns))
+    df_.loc[ctr].pipe(lambda x: x[x>int(cases_over)]).plot(logy=logy)
